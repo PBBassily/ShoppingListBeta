@@ -40,7 +40,7 @@ public class Item {
         this.name = name;
     }
 
-    public String getDescription() {
+    public String getCategory() {
         return category;
     }
 

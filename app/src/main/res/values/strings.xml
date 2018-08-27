@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">ShoppingMania</string>
+    <string name="app_name">Shopping Mania</string>
     <string name="action_settings">Settings</string>
+    <string name="currency_symbol">€</string>
+    <string name="delete">Delete</string>
+    <string name="title_activity_list">ListActivity</string>
 </resources>
