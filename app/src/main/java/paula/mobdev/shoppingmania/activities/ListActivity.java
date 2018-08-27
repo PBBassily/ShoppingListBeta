@@ -17,15 +17,21 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.mauker.materialsearchview.MaterialSearchView;
 import paula.mobdev.shoppingmania.R;
 import paula.mobdev.shoppingmania.controllers.ItemsFactory;
 import paula.mobdev.shoppingmania.controllers.ListItemAdapter;
+import paula.mobdev.shoppingmania.controllers.ProdcutsHandler;
 import paula.mobdev.shoppingmania.controllers.RecyclerItemTouchHelper;
 import paula.mobdev.shoppingmania.dbhandlers.DBActionsInvoker;
+import paula.mobdev.shoppingmania.model.CSVReader;
 import paula.mobdev.shoppingmania.model.Item;
 
 public class ListActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
@@ -36,6 +42,8 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
     private CoordinatorLayout coordinatorLayout;
     private DBActionsInvoker dbActionsInvoker ;
     private boolean deleteItem;
+    private MaterialSearchView searchView ;
+    private ProdcutsHandler productsHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +71,34 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
+        //init products handler
+        productsHandler = new ProdcutsHandler(this);
+        productsHandler.readProducts();
+
+        // init search tool
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.addSuggestions(productsHandler.getSuggestions());
+
+        searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Do something when the suggestion list is clicked.
+                String suggestion = searchView.getSuggestionAtPosition(position);
+
+                Log.d("search","suggestion : "+suggestion);
+                Item item = productsHandler.isItemFound(suggestion);
+                if(item!=null) {
+                    searchView.setQuery(suggestion, true);
+                    itemsList.add(item);
+                    refreshList();
+
+                }else{
+                    Toast.makeText(getApplicationContext(), "Item not found!",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         // adding item touch helper
         // only ItemTouchHelper.LEFT added to detect Right to Left swipe
         // if you want both Right -> Left and Left -> Right
@@ -75,11 +111,10 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Item item = ItemsFactory.createItem();
-                itemsList.add(0,item);
-                refreshList();
+                searchView.openSearch();
             }
         });
+
     }
 
     /**
@@ -157,5 +192,15 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         super.onPause();
         dbActionsInvoker.setItems(itemsList);
         dbActionsInvoker.run();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isOpen()) {
+            // Close the search on the back button press.
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
