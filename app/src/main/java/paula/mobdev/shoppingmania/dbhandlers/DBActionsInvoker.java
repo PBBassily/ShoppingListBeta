@@ -55,7 +55,7 @@ public class DBActionsInvoker implements Runnable{
         if(id == null)
             return ;
         Log.d("item info" , "item "+ id +" will be deleted from db");
-        db.deleteStory(id);
+        db.deleteItem(id);
     }
     public void setItems(List<Item> items){
         this.items=items;
