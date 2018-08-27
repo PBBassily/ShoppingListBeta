@@ -22,7 +22,7 @@ public class ProdcutsHandler {
     }
 
     public void readProducts() {
-        CSVReader csvReader = new CSVReader(context, "products_sheet.csv");
+        CSVReader csvReader = new CSVReader(context, "products.csv");
         try {
             rows = csvReader.readCSV();
             map = csvReader.getMapping();

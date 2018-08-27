@@ -98,7 +98,7 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
                 }
             }
         });
-        
+
         // adding item touch helper
         // only ItemTouchHelper.LEFT added to detect Right to Left swipe
         // if you want both Right -> Left and Left -> Right
