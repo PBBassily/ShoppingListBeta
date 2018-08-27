@@ -4,4 +4,10 @@
     <string name="currency_symbol">€</string>
     <string name="delete">Delete</string>
     <string name="title_activity_list">Your List</string>
+    <string name="action_cost">Expected cost</string>
+    <string name="action_sort">Sort by category</string>
+    <string name="action_reset">Reset List</string>
+    <string name="alert_reset_message">Are you sure ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
