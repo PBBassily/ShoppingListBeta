@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import paula.mobdev.shoppingmania.controllers.ItemListSorter;
 import paula.mobdev.shoppingmania.model.Item;
 
 public class DBActionsInvoker implements Runnable{
@@ -36,7 +37,7 @@ public class DBActionsInvoker implements Runnable{
             return new ArrayList<Item>();
         for (Item item : res)
             Log.d("db",item.getStatus()+"");
-        return res;
+        return ItemListSorter.normalSort(res);
     }
 
     public void saveItem(Item item){
@@ -56,6 +57,10 @@ public class DBActionsInvoker implements Runnable{
             return ;
         Log.d("item info" , "item "+ id +" will be deleted from db");
         db.deleteItem(id);
+    }
+
+    public void deleteAll(){
+        db.deleteAll();
     }
     public void setItems(List<Item> items){
         this.items=items;

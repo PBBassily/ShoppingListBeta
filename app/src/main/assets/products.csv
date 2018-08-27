@@ -81,7 +81,6 @@ Juice,Beverages,23
 Mixers,Beverages,36
 Red wine / White wine,Beverages,40
 Rum,Beverages,127
-Saké,Beverages,87
 Soda pop,Beverages,10
 Sports drink,Beverages,131
 Whiskey,Beverages,21
@@ -98,3 +97,10 @@ Prescription pick-up,Medicine,110
 Panadol,Medicine,170
 Breizoline,Medicine,197
 Spray,Medicine,193
+Butter / Margarine,Dairy,64
+Cottage cheese,Dairy,58
+Half & half,Dairy,59
+Milk,Dairy,70
+Sour cream,Dairy,21
+Whipped cream,Dairy,68
+Yogurt,Dairy,20

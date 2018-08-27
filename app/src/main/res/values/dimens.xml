@@ -2,4 +2,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="padd_10">10dp</dimen>
     <dimen name="ic_delete">30dp</dimen>
+    <dimen name="textSecondryFont">14dp</dimen>
+    <dimen name="textFont">21dp</dimen>
+    <dimen name="textBigFont">30dp</dimen>
+    <dimen name="padd_15">15dp</dimen>
 </resources>

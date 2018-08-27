@@ -1,12 +1,15 @@
 package paula.mobdev.shoppingmania.activities;
 
 
+import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -26,6 +30,7 @@ import java.util.List;
 
 import br.com.mauker.materialsearchview.MaterialSearchView;
 import paula.mobdev.shoppingmania.R;
+import paula.mobdev.shoppingmania.controllers.ItemListSorter;
 import paula.mobdev.shoppingmania.controllers.ItemsFactory;
 import paula.mobdev.shoppingmania.controllers.ListItemAdapter;
 import paula.mobdev.shoppingmania.controllers.ProdcutsHandler;
@@ -89,7 +94,7 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
                 Item item = productsHandler.isItemFound(suggestion);
                 if(item!=null) {
                     searchView.setQuery(suggestion, true);
-                    itemsList.add(item);
+                    itemsList.add(0,item);
                     refreshList();
 
                 }else{
@@ -202,5 +207,70 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_cost:
+                if(itemsList.size()!=0)
+                    showCost();
+                return true;
+            case R.id.action_sort:
+                sortList();
+                return true;
+            case R.id.action_reset:
+                if(itemsList.size()!=0)
+                    resetView();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void showCost() {
+        FragmentManager fm = getFragmentManager();
+        MyDialogFragment dialogFragment = new MyDialogFragment ();
+        Bundle args = new Bundle();
+        args.putDouble("prices",getTotalPrices());
+        dialogFragment.setArguments(args);
+        dialogFragment.show(fm, "Sample Fragment");
+    }
+
+    private double getTotalPrices() {
+        double prices = 0;
+        for(Item item :itemsList){
+            prices+=item.getPrice();
+        }
+        return prices;
+    }
+
+    private void resetView() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        dbActionsInvoker.deleteAll();
+                        itemsList.clear();
+                        refreshList();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getResources().getString(R.string.alert_reset_message))
+                .setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
+                .setNegativeButton(getResources().getString(R.string.no), dialogClickListener)
+                .show();
+    }
+
+    private void sortList() {
+        itemsList = ItemListSorter.categorySort(itemsList);
+        refreshList();
     }
 }

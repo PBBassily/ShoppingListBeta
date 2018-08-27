@@ -137,5 +137,11 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " +ITEM_TABLE+ " WHERE "+ITEM_ID+"='"+id+"'");
     }
+
+    public void deleteAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(SQL_DELETE_ITEM);
+        this.onCreate(db);
+    }
 }
 
