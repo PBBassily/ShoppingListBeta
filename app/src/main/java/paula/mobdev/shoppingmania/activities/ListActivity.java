@@ -1,6 +1,6 @@
 package paula.mobdev.shoppingmania.activities;
 
-import android.annotation.SuppressLint;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,15 +25,21 @@ import paula.mobdev.shoppingmania.R;
 import paula.mobdev.shoppingmania.controllers.ItemsFactory;
 import paula.mobdev.shoppingmania.controllers.ListItemAdapter;
 import paula.mobdev.shoppingmania.controllers.RecyclerItemTouchHelper;
+import paula.mobdev.shoppingmania.dbhandlers.DBActionsInvoker;
 import paula.mobdev.shoppingmania.model.Item;
 
 public class ListActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
+
     private RecyclerView recyclerView;
     private List<Item> itemsList;
     private ListItemAdapter mAdapter;
     private CoordinatorLayout coordinatorLayout;
+    private DBActionsInvoker dbActionsInvoker ;
+    private boolean deleteItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // setup activity view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -41,7 +47,13 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         coordinatorLayout = findViewById(R.id.coordinator_layout);
 
 
-        itemsList = new ArrayList<Item>();
+        // init db invoker
+        dbActionsInvoker = DBActionsInvoker.getInstance(this);
+
+        //load items
+        itemsList = dbActionsInvoker.loadItems();
+
+
         recyclerView = findViewById(R.id.recycler_view);
         mAdapter = new ListItemAdapter(this, itemsList);
 
@@ -95,10 +107,11 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
             // backup of removed item for undo purpose
             final Item deletedItem = itemsList.get(viewHolder.getAdapterPosition());
             final int deletedIndex = viewHolder.getAdapterPosition();
-            //deleteItem = true ;
+            deleteItem = true ;
 
             // remove the item from recycler view
             mAdapter.removeItem(viewHolder.getAdapterPosition());
+            refreshList();
 
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
@@ -109,11 +122,26 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
 
                     // restore item if user pressed UNDO
                     mAdapter.restoreItem(deletedItem, deletedIndex);
+                    refreshList();
+                    deleteItem = false;
 
                 }
             });
             snackbar.setActionTextColor(getResources().getColor(R.color.colorAccent));
             snackbar.show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    if(deleteItem){
+                        Log.d("db","will delete");
+                        dbActionsInvoker.deleteItem(deletedItem.getId());
+                    }else{
+                        Log.d("db","will not delete");
+                    }
+                }
+            }, 2000);
         }
     }
 
@@ -122,5 +150,12 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         // Inflate the menu; this adds cartList to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+    @Override
+    protected void onPause() {
+        Log.d("db","pause");
+        super.onPause();
+        dbActionsInvoker.setItems(itemsList);
+        dbActionsInvoker.run();
     }
 }

@@ -14,6 +14,11 @@ public class DBActionsInvoker implements Runnable{
     private static SQLiteDBHelper db = null;
     private List<Item> items;
 
+    /**
+     * Singleton constructor
+     * @param context
+     * @return
+     */
     public static DBActionsInvoker getInstance (Context context){
 
         if(instance == null){

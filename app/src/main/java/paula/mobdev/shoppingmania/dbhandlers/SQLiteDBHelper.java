@@ -7,7 +7,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+
 import java.util.ArrayList;
+
 import paula.mobdev.shoppingmania.model.Item;
 
 
@@ -15,25 +19,25 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "Items";
-    public static final String ITEM_TABLE = "item_table";
+    public static final String DATABASE_NAME = "StoryBuilder";
+    public static final String ITEM_TABLE = "item";
     public static final String ITEM_ID = "item_id";
-    public static final String ITEM_NAME = "item_name";
-    public static final String ITEM_CATEGORY = "item_category";
-    public static final String ITEM_PRICE = "item_price";
-    public static final String ITEM_STATUS = "item_status";
+    public static final String ITEM_NAME = "name";
+    public static final String CATEGORY = "category";
+    public static final String ITEM_PRICE = "price";
+    public static final String ITEM_CHECKED = "checked";
 
     //Create story Table Query
     private static final String SQL_CREATE_ITEM =
             "CREATE TABLE ITEM (" + ITEM_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + ITEM_NAME + " TEXT NOT NULL," + ITEM_CATEGORY + "  TEXT NOT NULL, "
-                    + ITEM_PRICE + "  REAL NOT NULL, " + ITEM_STATUS+ "  INTEGER NOT NULL);";
+                    + ITEM_NAME + " TEXT NOT NULL," + CATEGORY + "  TEXT NOT NULL, "
+                    + ITEM_PRICE + "  REAL NOT NULL, " + ITEM_CHECKED + "  INTEGER NOT NULL);";
 
 
-    protected static final String SQL_DELETE_ITEM =
+    private static final String SQL_DELETE_ITEM =
             "DROP TABLE IF EXISTS " + ITEM_TABLE;
 
-    protected SQLiteDBHelper(Context context) {
+    public SQLiteDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -58,8 +62,8 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         this.onUpgrade(db, oldVersion, newVersion);
     }
 
-    //Adds a new item
-    protected boolean addItem(Item item) {
+    //Adds a new story
+    public boolean addItem(Item item) {
 
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
@@ -67,9 +71,9 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         //Create a map having movie details to be inserted
         ContentValues itemDetails = new ContentValues();
         itemDetails.put(ITEM_NAME, item.getName());
-        itemDetails.put(ITEM_CATEGORY, item.getCategory());
+        itemDetails.put(CATEGORY, item.getCategory());
         itemDetails.put(ITEM_PRICE, item.getPrice());
-        itemDetails.put(ITEM_STATUS, item.getStatus()==false?0:1);
+        itemDetails.put(ITEM_CHECKED, item.getStatus()==false?0:1);
 
 
         long newRowId = db.insert(ITEM_TABLE, null, itemDetails);
@@ -82,12 +86,11 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     //Retrieves details all stories
 
-    protected ArrayList<Item> getAllItems() {
+    public ArrayList<Item> getAllItems() {
 
         ArrayList <Item> itemList = new ArrayList<Item>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + ITEM_TABLE;
-
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -99,9 +102,9 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                 Item item = new Item(
                         Integer.parseInt(cursor.getString(cursor.getColumnIndex(ITEM_ID))),
                         cursor.getString(cursor.getColumnIndex(ITEM_NAME)),
-                        cursor.getString(cursor.getColumnIndex(ITEM_CATEGORY)),
+                        cursor.getString(cursor.getColumnIndex(CATEGORY)),
                         cursor.getFloat(cursor.getColumnIndex(ITEM_PRICE)),
-                        cursor.getInt(cursor.getColumnIndex(ITEM_STATUS))==0?false:true);
+                        cursor.getInt(cursor.getColumnIndex(ITEM_CHECKED))==0?false:true);
 
 
                 // Adding story to list
@@ -113,17 +116,17 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         return itemList;
 
     }
-    protected void updateItem(Item item) {
+    public void updateItem(Item item) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         //Create a map having story details to be inserted
         ContentValues itemDetails = new ContentValues();
         itemDetails.put(ITEM_NAME, item.getName());
-        itemDetails.put(ITEM_CATEGORY, item.getStatus());
+        itemDetails.put(CATEGORY, item.getCategory());
         itemDetails.put(ITEM_PRICE, item.getPrice());
-        itemDetails.put(ITEM_STATUS, item.getStatus()==false?0:1);
-
+        itemDetails.put(ITEM_CHECKED, item.getStatus()==false?0:1);
+        Log.d("db","item_check_stat:"+itemDetails.getAsString(ITEM_CHECKED));
 
 
         db.update(ITEM_TABLE, itemDetails, ITEM_ID + " = ?",
@@ -131,10 +134,12 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     }
 
     //Deletes the specified story
-    protected void deleteStory(Integer id) {
+    public void deleteStory(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " +ITEM_TABLE+ " WHERE "+ITEM_ID+"='"+id+"'");
     }
+
+
 
 }
 
