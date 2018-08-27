@@ -23,6 +23,8 @@
             android:name=".activities.ListActivity"
             android:label="@string/title_activity_list"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.Splash"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <provider
             android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
@@ -30,6 +32,11 @@
             android:exported="false"
             android:protectionLevel="signature"
             android:syncable="true" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+
     </application>
 
 </manifest>
