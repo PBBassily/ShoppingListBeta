@@ -4,6 +4,7 @@ package paula.mobdev.shoppingmania.activities;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -22,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -49,9 +51,11 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
     private boolean deleteItem;
     private MaterialSearchView searchView ;
     private ProdcutsHandler productsHandler;
+    private TextView emptyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         // setup activity view
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
@@ -59,6 +63,9 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         setSupportActionBar(toolbar);
         coordinatorLayout = findViewById(R.id.coordinator_layout);
 
+        emptyTextView = (TextView)findViewById(R.id.empty_text);
+        Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/Nunito-ExtraBold.ttf");
+        emptyTextView.setTypeface(custom_font);
 
         // init db invoker
         dbActionsInvoker = DBActionsInvoker.getInstance(this);
@@ -69,6 +76,7 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
 
         recyclerView = findViewById(R.id.recycler_view);
         mAdapter = new ListItemAdapter(this, itemsList);
+        refreshList();
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -117,6 +125,7 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
             @Override
             public void onClick(View view) {
                 searchView.openSearch();
+                emptyTextView.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -126,6 +135,10 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
      * method make volley network call and parses json
      */
     private void refreshList() {
+        if (itemsList.size()==0)
+            emptyTextView.setVisibility(View.VISIBLE);
+        else
+            emptyTextView.setVisibility(View.INVISIBLE);
         mAdapter.notifyDataSetChanged();
 
     }
@@ -204,6 +217,7 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         if (searchView.isOpen()) {
             // Close the search on the back button press.
             searchView.closeSearch();
+            refreshList();
         } else {
             super.onBackPressed();
         }
