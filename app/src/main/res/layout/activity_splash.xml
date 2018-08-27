@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/colorPrimary"
+    android:weightSum="10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:weightSum="20">
+        <TextView
+            android:id="@+id/app_title_part1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="11"
+            android:gravity="center|right"
+            android:text="@string/shopping"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textBigFont"
+            />
+        <TextView
+            android:id="@+id/app_title_part2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:gravity="center|left"
+            android:text="@string/mania"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/textBigFont" />
+    </LinearLayout>
+
+
+    <ImageView android:id="@+id/splashscreen" android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/splash"
+        android:layout_gravity="center"
+        android:layout_weight="7"/>
+
+    <TextView android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="@string/signature"
+        android:textSize="@dimen/textSecondryFont"
+        android:textColor="@color/white"
+        android:gravity="center"/>
+
+</LinearLayout>

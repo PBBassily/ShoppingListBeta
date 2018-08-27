@@ -7,5 +7,6 @@
     <color name="colorDeletion">#B00020</color>
     <color name="colorTextPrimary">#000000</color>
     <color name="colorTextSecondary">#616161</color>
+    <color name="colorTextFade">#C1C6C1</color>
 
 </resources>

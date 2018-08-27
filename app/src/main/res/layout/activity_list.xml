@@ -31,6 +31,6 @@
         android:layout_height="66dp"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@mipmap/add" />
 
 </android.support.design.widget.CoordinatorLayout>
