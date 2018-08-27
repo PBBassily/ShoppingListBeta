@@ -1,6 +1,7 @@
 package paula.mobdev.shoppingmania.activities;
 
 
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -93,7 +94,7 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
                 Item item = productsHandler.isItemFound(suggestion);
                 if(item!=null) {
                     searchView.setQuery(suggestion, true);
-                    itemsList.add(item);
+                    itemsList.add(0,item);
                     refreshList();
 
                 }else{
@@ -212,8 +213,8 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_cost:
-                Toast.makeText(getApplicationContext(), "cost",
-                        Toast.LENGTH_SHORT).show();
+                if(itemsList.size()!=0)
+                    showCost();
                 return true;
             case R.id.action_sort:
                 sortList();
@@ -225,6 +226,23 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
             default:
                 return super.onContextItemSelected(item);
         }
+    }
+
+    private void showCost() {
+        FragmentManager fm = getFragmentManager();
+        MyDialogFragment dialogFragment = new MyDialogFragment ();
+        Bundle args = new Bundle();
+        args.putDouble("prices",getTotalPrices());
+        dialogFragment.setArguments(args);
+        dialogFragment.show(fm, "Sample Fragment");
+    }
+
+    private double getTotalPrices() {
+        double prices = 0;
+        for(Item item :itemsList){
+            prices+=item.getPrice();
+        }
+        return prices;
     }
 
     private void resetView() {

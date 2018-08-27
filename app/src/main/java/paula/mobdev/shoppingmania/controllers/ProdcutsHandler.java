@@ -29,26 +29,27 @@ public class ProdcutsHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("search","rows size"+rows.size());
-        Log.d("search","map size"+map.size());
     }
     public ArrayList<String> getSuggestions (){
         ArrayList<String> suggestions = new ArrayList<String>();
         for (String [] row : rows) {
             suggestions.add(row[0]);
         }
-        Log.d("search","suggestions size"+suggestions.size());
         return  suggestions;
     }
     public Item isItemFound(String query){
-        Log.d("search","query : "+query);
+        query = query.toLowerCase().trim();
+        query = query.substring(0, 1).toUpperCase() + query.substring(1);
         Item item = null ;
+
         if(map.containsKey(query)){
+
             String[] itemData = rows.get(map.get(query));
             String itemName = itemData[0];
             String itemCategory = itemData[1];
             Double itemPrice = Double.parseDouble(itemData[2]);
             item = new Item(null,itemName,itemCategory,itemPrice,false);
+
         }
         return item;
     }
