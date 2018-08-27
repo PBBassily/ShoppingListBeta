@@ -66,7 +66,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.MyView
         // set attributes to the view
         holder.name.setText(item.getName());
         holder.category.setText(item.getCategory());
-        holder.price.setText(""+R.string.currency_symbol + item.getPrice());
+        holder.price.setText(context.getResources().getString(R.string.currency_symbol) + item.getPrice());
         holder.checkBox.setOnCheckedChangeListener(null);
         holder.checkBox.setChecked(item.getStatus());
 
@@ -138,13 +138,13 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.MyView
         }
     }
 
-    @SuppressLint("ResourceAsColor")
+
     private void refreshHolder(MyViewHolder holder, boolean isChecked){
 
         if(isChecked) {
 
             // change text color
-            holder.name.setTextColor(R.color.colorTextSecondary);
+            holder.name.setTextColor(context.getResources().getColor(R.color.colorTextSecondary));
 
             // draw strike on the item name
             holder.name.setPaintFlags(holder.name.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -159,7 +159,7 @@ public class ListItemAdapter extends RecyclerView.Adapter<ListItemAdapter.MyView
         }else{
 
             // restore item name text color
-            holder.name.setTextColor(R.color.colorTextPrimary);
+            holder.name.setTextColor(context.getResources().getColor(R.color.colorTextPrimary));
 
             //remove the strike fro the text
             holder.name.setPaintFlags(holder.name.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
