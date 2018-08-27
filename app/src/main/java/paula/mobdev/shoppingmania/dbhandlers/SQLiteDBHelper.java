@@ -1,4 +1,4 @@
-package paula.mobdev.shoppingmania.dbhandlers
+package paula.mobdev.shoppingmania.dbhandlers;
 
 
 
@@ -7,11 +7,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-
 import java.util.ArrayList;
-
 import paula.mobdev.shoppingmania.model.Item;
 
 
@@ -34,10 +30,10 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
                     + ITEM_PRICE + "  REAL NOT NULL, " + ITEM_STATUS+ "  INTEGER NOT NULL);";
 
 
-    private static final String SQL_DELETE_ITEM =
+    protected static final String SQL_DELETE_ITEM =
             "DROP TABLE IF EXISTS " + ITEM_TABLE;
 
-    public SQLiteDBHelper(Context context) {
+    protected SQLiteDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -62,8 +58,8 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         this.onUpgrade(db, oldVersion, newVersion);
     }
 
-    //Adds a new story
-    public boolean addItem(Item item) {
+    //Adds a new item
+    protected boolean addItem(Item item) {
 
         // Gets the data repository in write mode
         SQLiteDatabase db = this.getWritableDatabase();
@@ -86,7 +82,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
 
     //Retrieves details all stories
 
-    public ArrayList<Item> getAllItems() {
+    protected ArrayList<Item> getAllItems() {
 
         ArrayList <Item> itemList = new ArrayList<Item>();
         // Select All Query
@@ -117,7 +113,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
         return itemList;
 
     }
-    public void updateItem(Item item) {
+    protected void updateItem(Item item) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -135,7 +131,7 @@ public class SQLiteDBHelper extends SQLiteOpenHelper {
     }
 
     //Deletes the specified story
-    public void deleteStory(Integer id) {
+    protected void deleteStory(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " +ITEM_TABLE+ " WHERE "+ITEM_ID+"='"+id+"'");
     }
