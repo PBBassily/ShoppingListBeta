@@ -20,6 +20,12 @@
             android:name=".activities.ListActivity"
             android:label="@string/title_activity_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <provider
+            android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
+            android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true"/>
     </application>
 
 </manifest>

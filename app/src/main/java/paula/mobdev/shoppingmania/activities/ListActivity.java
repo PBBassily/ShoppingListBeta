@@ -21,6 +21,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.mauker.materialsearchview.MaterialSearchView;
 import paula.mobdev.shoppingmania.R;
 import paula.mobdev.shoppingmania.controllers.ItemsFactory;
 import paula.mobdev.shoppingmania.controllers.ListItemAdapter;
@@ -36,6 +37,7 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
     private CoordinatorLayout coordinatorLayout;
     private DBActionsInvoker dbActionsInvoker ;
     private boolean deleteItem;
+    private MaterialSearchView searchView ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,10 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(mAdapter);
 
+        // init search tool
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.addSuggestions(new String[]{"Casini","Andromeda","Europa","Voyager","Spitzer","Hubble"});
+
         // adding item touch helper
         // only ItemTouchHelper.LEFT added to detect Right to Left swipe
         // if you want both Right -> Left and Left -> Right
@@ -75,9 +81,10 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Item item = ItemsFactory.createItem();
-                itemsList.add(0,item);
-                refreshList();
+                searchView.openSearch();
+//                Item item = ItemsFactory.createItem();
+//                itemsList.add(0,item);
+//                refreshList();
             }
         });
     }
@@ -157,5 +164,15 @@ public class ListActivity extends AppCompatActivity implements RecyclerItemTouch
         super.onPause();
         dbActionsInvoker.setItems(itemsList);
         dbActionsInvoker.run();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isOpen()) {
+            // Close the search on the back button press.
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
     }
 }
