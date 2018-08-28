@@ -9,6 +9,11 @@ import java.util.List;
 import paula.mobdev.shoppingmania.model.Item;
 
 public class ItemListSorter {
+    /**
+     * sorts the list according to checked or not checked only
+     * @param itemList
+     * @return
+     */
     public static List<Item> normalSort(List<Item> itemList){
         Collections.sort(itemList, new Comparator<Item>() {
             @Override
@@ -21,7 +26,12 @@ public class ItemListSorter {
         return itemList;
     }
 
-    public static List<Item> categorySort(List<Item> itemList){
+    /**
+     * sorts the list according to status then category then name
+     * @param itemList
+     * @return
+     */
+    public static List<Item> categorySort(List<Item> itemList) {
         Collections.sort(itemList, new Comparator<Item>() {
             @Override
             public int compare(Item o1, Item o2) {
@@ -35,5 +45,4 @@ public class ItemListSorter {
         });
         return itemList;
     }
-
 }

@@ -10,9 +10,9 @@
     <string name="alert_reset_message">Are you sure ?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="copy_right">©2018 Paula Bassily</string>
     <string name="signature">Paula B Bassily © 2018</string>
     <string name="shopping">Shopping</string>
     <string name="mania">Mania</string>
     <string name="empty_list_text">Your list is empty!</string>
+    <string name="alert_item_not_found">Item not found!</string>
 </resources>

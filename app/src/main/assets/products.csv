@@ -5,7 +5,7 @@ Cauliflower,Fresh vegetables,111
 Celery,Fresh vegetables,90
 Corn,Fresh vegetables,84
 Cucumbers,Fresh vegetables,147
-Lettuce / Greens,Fresh vegetables,20
+Lettuce,Fresh vegetables,20
 Mushrooms,Fresh vegetables,195
 Onions,Fresh vegetables,157
 Peppers,Fresh vegetables,131
@@ -18,8 +18,8 @@ BBQ sauce,Sauces,7
 Gravy,Sauces,19
 Honey,Sauces,117
 Hot sauce,Sauces,47
-Jam / Jelly / Preserves,Sauces,28
-Ketchup / Mustard,Sauces,70
+Jam,Sauces,28
+Ketchup,Sauces,70
 Mayonnaise,Sauces,79
 Pasta sauce,Sauces,87
 Relish,Sauces,135
@@ -29,12 +29,12 @@ Soy sauce,Sauces,146
 Steak sauce,Sauces,169
 Syrup,Sauces,66
 Worcestershire sauce,Sauces,160
-Bagels / Croissants,Baked,138
-Buns / Rolls,Baked,102
-Cake / Cookies,Baked,12
-Donuts / Pastries,Baked,114
+Croissants,Baked,138
+Buns,Baked,102
+Cookies,Baked,12
+Donuts,Baked,114
 Fresh bread,Baked,157
-Pie! Pie! Pie!,Baked,156
+Pie,Baked,156
 Pita bread,Baked,26
 Sliced bread,Baked,61
 Bleu cheese,Cheese,169
@@ -57,7 +57,7 @@ Cherries,Fruits,82
 Grapefruit,Fruits,116
 Grapes,Fruits,74
 Kiwis,Fruits,186
-Lemons / Limes,Fruits,196
+Lemons,Fruits,196
 Melon,Fruits,41
 Nectarines,Fruits,193
 Oranges,Fruits,52
@@ -74,12 +74,12 @@ Shrimp,Seafood ,197
 Tilapia,Seafood ,168
 Tuna,Seafood ,129
 Beer,Beverages,22
-Club soda / Tonic,Beverages,58
+Club soda,Beverages,58
 Champagne,Beverages,155
 Gin,Beverages,6
 Juice,Beverages,23
 Mixers,Beverages,36
-Red wine / White wine,Beverages,40
+Red wine,Beverages,40
 Rum,Beverages,127
 Soda pop,Beverages,10
 Sports drink,Beverages,131
@@ -90,14 +90,14 @@ Antibiotic,Medicine,101
 Antidiarrheal,Medicine,60
 Aspirin,Medicine,193
 Antacid,Medicine,38
-Band-aids / Medical,Medicine,121
-Cold / Flu / Sinus,Medicine,69
+Band-aids,Medicine,121
+Flu,Medicine,69
 Pain reliever,Medicine,113
 Prescription pick-up,Medicine,110
 Panadol,Medicine,170
 Breizoline,Medicine,197
 Spray,Medicine,193
-Butter / Margarine,Dairy,64
+Butter,Dairy,64
 Cottage cheese,Dairy,58
 Half & half,Dairy,59
 Milk,Dairy,70

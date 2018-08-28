@@ -7,6 +7,10 @@ import java.util.Random;
 import paula.mobdev.shoppingmania.model.Item;
 
 public class ItemsFactory {
+    /**
+     * create place holder for testing
+     * @return random items
+     */
     public static List<Item> getPlaceHolders() {
         Random random= new Random();
         List<Item> list = new ArrayList<Item>();
@@ -18,6 +22,10 @@ public class ItemsFactory {
         return list;
     }
 
+    /**
+     * create a random item
+     * @return random item
+     */
     public static Item createItem() {
         Random r = new Random();
         Item item= new Item(null,"Item "+r.nextInt(),"cheese",r.nextDouble(),false);

@@ -17,23 +17,23 @@ public class Splash extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        TextView tx1 = (TextView)findViewById(R.id.app_title_part1);
-        TextView tx2 = (TextView)findViewById(R.id.app_title_part2);
+        TextView appTitlePartOne = (TextView)findViewById(R.id.app_title_part1);
+        TextView appTitlePartTwo = (TextView)findViewById(R.id.app_title_part2);
 
         Typeface custom_font = Typeface.createFromAsset(getAssets(),  "fonts/Nunito-ExtraBold.ttf");
 
-        tx1.setTypeface(custom_font);
-        tx2.setTypeface(custom_font);
+        appTitlePartOne.setTypeface(custom_font);
+        appTitlePartTwo.setTypeface(custom_font);
 
-            /* New Handler to start the Menu-Activity
-             * and close this Splash-Screen after some seconds.*/
+            /* New Handler to start the ListActivity
+             * and close this Splash-Screen after 1 second.*/
             new Handler().postDelayed(new Runnable(){
                 @Override
                 public void run() {
-                    /* Create an Intent that will start the Menu-Activity. */
+                    /* Create an Intent that will start the ListActivity. */
                     Intent mainIntent = new Intent(Splash.this,ListActivity.class);
-                    Splash.this.startActivity(mainIntent);
-                    Splash.this.finish();
+                    startActivity(mainIntent);
+                    finish();
                 }
             }, SPLASH_DISPLAY_LENGTH);
     }

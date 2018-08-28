@@ -13,30 +13,36 @@ import java.text.DecimalFormat;
 
 import paula.mobdev.shoppingmania.R;
 
-public class MyDialogFragment extends DialogFragment {
+public class ExpectedCostFragment extends DialogFragment {
+
+    private static final double MAXIMUM_TOTAL_PRICE = 10000.0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // setup the main view
         DecimalFormat decimalFormat = new DecimalFormat(".##");
         View rootView = inflater.inflate(R.layout.custom_cost_dialogue, container, false);
         double prices = getArguments().getDouble("prices");
 
+        // access to the 3 textViews
         TextView subTextView = (TextView)rootView.findViewById(R.id.cost_subtotal);
         TextView vatTextView = (TextView)rootView.findViewById(R.id.cost_vat);
         TextView totalTextView = (TextView)rootView.findViewById(R.id.cost_total);
 
-        String plus = "";
-        if(prices>10000.0){
-            prices = 10000.0;
-            plus="+";
+        // upper limit on the prices
+        // to avoid view deformation
+        String suffix = "";
+        if(prices > MAXIMUM_TOTAL_PRICE){
+            prices = MAXIMUM_TOTAL_PRICE;
+            suffix = "+";
         }
-        subTextView.setText(getResources().getString(R.string.currency_symbol) + prices+plus);
+        subTextView.setText(getResources().getString(R.string.currency_symbol) + prices+suffix);
 
         vatTextView.setText(getResources().getString(R.string.currency_symbol) +
-                decimalFormat.format(prices*.14)+plus);
+                decimalFormat.format(prices*.14)+suffix);
 
         totalTextView.setText(getResources().getString(R.string.currency_symbol) +
-                decimalFormat.format(prices*.14+prices)+plus);
+                decimalFormat.format(prices*.14+prices)+suffix);
 
         return rootView;
     }

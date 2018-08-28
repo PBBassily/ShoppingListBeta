@@ -21,6 +21,13 @@ public class CSVReader {
         this.fileName = fileName;
     }
 
+    /**
+     * read data row by row and create the data array and the mapping
+     * between the item name and its index in the array to facilitate
+     * the search
+     * @return
+     * @throws IOException if file not found
+     */
     public List<String[]> readCSV() throws IOException {
         InputStream is = context.getAssets().open(fileName);
         InputStreamReader isr = new InputStreamReader(is);
@@ -38,6 +45,10 @@ public class CSVReader {
         return rows;
     }
 
+    /**
+     *
+     * @return the mapping of item name <==> index
+     */
     public HashMap<String,Integer> getMapping() {
         return map ;
     }

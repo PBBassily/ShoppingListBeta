@@ -35,8 +35,7 @@ public class DBActionsInvoker implements Runnable{
         List<Item> res= db.getAllItems();
         if(res==null)
             return new ArrayList<Item>();
-        for (Item item : res)
-            Log.d("db",item.getStatus()+"");
+
         return ItemListSorter.normalSort(res);
     }
 

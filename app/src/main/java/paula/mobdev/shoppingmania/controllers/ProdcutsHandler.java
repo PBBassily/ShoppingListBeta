@@ -21,6 +21,12 @@ public class ProdcutsHandler {
         this.context = context;
     }
 
+    /**
+     * handles data reading from CSV file
+     * set the array of data and
+     * the mapping between itemName and is index in the array
+     * to facilitate searching process
+     */
     public void readProducts() {
         CSVReader csvReader = new CSVReader(context, "products.csv");
         try {
@@ -30,6 +36,11 @@ public class ProdcutsHandler {
             e.printStackTrace();
         }
     }
+
+    /**
+     * set suggestions for the search tool
+     * @return items' names
+     */
     public ArrayList<String> getSuggestions (){
         ArrayList<String> suggestions = new ArrayList<String>();
         for (String [] row : rows) {
@@ -37,6 +48,12 @@ public class ProdcutsHandler {
         }
         return  suggestions;
     }
+
+    /**
+     * search for the query in the data array
+     * @param query
+     * @return created item or null if query not in data
+     */
     public Item isItemFound(String query){
         query = query.toLowerCase().trim();
         query = query.substring(0, 1).toUpperCase() + query.substring(1);
