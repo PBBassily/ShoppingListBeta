@@ -27,19 +27,15 @@ public class CSVReader {
         BufferedReader br = new BufferedReader(isr);
         String line;
         String csvSplitBy = ",";
-
         br.readLine();
-
         while ((line = br.readLine()) != null) {
             String[] row = line.split(csvSplitBy);
             rows.add(row);
-            map.put(row[0],rows.size()-1);
+            map.put(row[0].toLowerCase().trim(),rows.size()-1);
         }
         return rows;
     }
-
     public HashMap<String,Integer> getMapping() {
         return map ;
     }
-
 }

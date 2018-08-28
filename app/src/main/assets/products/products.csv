@@ -13,7 +13,7 @@ Potatoes,Fresh vegetables,101
 Spinach,Fresh vegetables,10
 Squash,Fresh vegetables,134
 Zucchini,Fresh vegetables,133
-Tomatoes*,Fresh vegetables,92
+Tomatoes,Fresh vegetables,92
 BBQ sauce,Sauces,7
 Gravy,Sauces,19
 Honey,Sauces,117
@@ -34,7 +34,7 @@ Buns / Rolls,Baked,102
 Cake / Cookies,Baked,12
 Donuts / Pastries,Baked,114
 Fresh bread,Baked,157
-Pie! Pie! Pie!,Baked,156
+Pie,Baked,156
 Pita bread,Baked,26
 Sliced bread,Baked,61
 Bleu cheese,Cheese,169
@@ -74,6 +74,7 @@ Shrimp,Seafood ,197
 Tilapia,Seafood ,168
 Tuna,Seafood ,129
 Beer,Beverages,22
+Water,Beverages,10
 Club soda / Tonic,Beverages,58
 Champagne,Beverages,155
 Gin,Beverages,6

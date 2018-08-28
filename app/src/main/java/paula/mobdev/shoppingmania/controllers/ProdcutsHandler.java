@@ -1,7 +1,6 @@
 package paula.mobdev.shoppingmania.controllers;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class ProdcutsHandler {
     }
 
     public void readProducts() {
-        CSVReader csvReader = new CSVReader(context, "products.csv");
+        CSVReader csvReader = new CSVReader(context, "products/products.csv");
         try {
             rows = csvReader.readCSV();
             map = csvReader.getMapping();
@@ -39,7 +38,6 @@ public class ProdcutsHandler {
     }
     public Item isItemFound(String query){
         query = query.toLowerCase().trim();
-        query = query.substring(0, 1).toUpperCase() + query.substring(1);
         Item item = null ;
 
         if(map.containsKey(query)){
